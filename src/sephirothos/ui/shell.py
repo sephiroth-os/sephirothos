@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
+from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget
 
 
 class Shell(QWidget):
@@ -32,6 +32,10 @@ class Shell(QWidget):
         self.top_bar.setStyleSheet("background-color: #121212; border-radius: 0px")
 
         self.top_bar.setMinimumHeight(60)
+
+        self.top_bar_layout = QHBoxLayout(self.top_bar)
+        self.top_bar_layout.setContentsMargins(0, 0, 0, 0)
+        self.top_bar_layout.setSpacing(0)
 
     def _build_workspace(self) -> None:
         self.workspace = QWidget()
