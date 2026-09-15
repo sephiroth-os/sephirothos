@@ -1,11 +1,23 @@
 [build-system]
-requires = ['setuptools']
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "sephirothos"
-version = "0.1.0"
+version = "0.1.0-a.1"
 requires-python = ">=3.14,<3.15"
+dependencies = [
+    "PySide6>=6.7,<7",
+    "packaging>=24,<27",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9,<10",
+]
+
+[project.scripts]
+sephirothos = "sephirothos.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

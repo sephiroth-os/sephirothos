@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   lint-and-test:
-    name: Lint and test / Python 3.14 / Windows
+    name: Test (Not Lint Because I Format My Own Damn Code) / Python 3.14 / Windows
     runs-on: windows-latest
     timeout-minutes: 10
 
