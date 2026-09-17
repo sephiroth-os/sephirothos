@@ -21,7 +21,7 @@ class BackgroundMusicService(QObject):
 
         self.media_player.setAudioOutput(self.audio_output)
         self.media_player.setLoops(QMediaPlayer.Loops.Infinite)
-        self.media_player.setSource(QUrl("qrc:/bgm/BundledSoundtrack3.mp3"))
+        self.media_player.setSource(QUrl("qrc:/bgm/BundledSoundtrack2.mp3"))
 
         self.media_player.errorOccurred.connect(self._handle_error)
 

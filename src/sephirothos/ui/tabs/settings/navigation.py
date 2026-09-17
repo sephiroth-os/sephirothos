@@ -1,16 +1,5 @@
-"""Settings tab page identities."""
+"""Settings tab navigation."""
 
-from enum import StrEnum
+from .pages import DEFAULT_SETTINGS_PAGE
 
-
-class SettingsPageId(StrEnum):
-    GENERAL = "general"
-
-
-SETTINGS_PAGE_LABELS: dict[SettingsPageId, str] = {
-    SettingsPageId.GENERAL: "General",
-}
-
-SETTING_PAGE_ORDER: tuple[SettingsPageId, ...] = (SettingsPageId.GENERAL,)
-
-DEFAULT_SETTINGS_PAGE = SettingsPageId.GENERAL
+__all__ = ["DEFAULT_SETTINGS_PAGE"]

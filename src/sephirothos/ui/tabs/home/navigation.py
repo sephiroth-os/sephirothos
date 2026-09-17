@@ -1,16 +1,5 @@
-"""Home tab page identities."""
+"""Home tab navigation."""
 
-from enum import StrEnum
+from .pages import DEFAULT_HOME_PAGE
 
-
-class HomePageId(StrEnum):
-    DASHBOARD = "dashboard"
-
-
-HOME_PAGE_LABELS: dict[HomePageId, str] = {
-    HomePageId.DASHBOARD: "Dashboard",
-}
-
-HOME_PAGE_ORDER: tuple[HomePageId, ...] = (HomePageId.DASHBOARD,)
-
-DEFAULT_HOME_PAGE = HomePageId.DASHBOARD
+__all__ = ["DEFAULT_HOME_PAGE"]

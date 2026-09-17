@@ -3,6 +3,7 @@
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
     QButtonGroup,
+    QFrame,
     QLabel,
     QPushButton,
     QVBoxLayout,
@@ -14,13 +15,18 @@ from sephirothos.ui.roles import (
     ButtonVariant,
     SurfaceRole,
     TextRole,
-)
-from sephirothos.ui.tabs.cli.navigation import (
-    DEFAULT_CLI_PAGE,
-    CLI_PAGE_LABELS,
-    CLIPageId,
+    DividerRole,
 )
 
+from .pages import PAGES, DEFAULT_CLI_PAGE
+
+SPEC_BUTTONS: list[str] = [
+    "New Terminal",
+    "New Tab",
+    "Split Terminal",
+    "Close Terminal",
+
+]
 
 class CLIBar(QWidget):
     """Navigation contents displayed inside the shell sidebar."""
@@ -53,32 +59,112 @@ class CLIBar(QWidget):
             TextRole.SECTION_TITLE.value,
         )
 
-        self.get_started_button = QPushButton(CLI_PAGE_LABELS[CLIPageId.GET_STARTED])
-        self.get_started_button.setCheckable(True)
-        self.get_started_button.setProperty(
-            "buttonVariant",
-            ButtonVariant.NAVIGATION.value,
-        )
-        self.get_started_button.clicked.connect(
-            lambda _checked=False: self.page_requested.emit(CLIPageId.GET_STARTED)
-        )
-
-        self.page_buttons = {
-            CLIPageId.GET_STARTED: self.get_started_button,
-        }
-
         self.page_button_group = QButtonGroup(self)
         self.page_button_group.setExclusive(True)
-        self.page_button_group.addButton(
-            self.get_started_button,
-        )
+
+        self.page_buttons: dict[str, QPushButton] = {}
 
         self.main_layout.addWidget(self.section_label)
-        self.main_layout.addWidget(self.get_started_button)
+
+        for definition in PAGES:
+            button = QPushButton(definition.label)
+
+            button.setCheckable(True)
+            button.setProperty(
+                "buttonVariant",
+                ButtonVariant.NAVIGATION.value,
+            )
+
+            button.clicked.connect(
+                lambda _checked=False, page_id=definition.id:
+                    self.page_requested.emit(page_id)
+            )
+
+            self.page_buttons[definition.id] = button
+            self.page_button_group.addButton(button)
+
+            self.main_layout.addWidget(button)
+
+            if definition.id == "get_started":
+
+                self.divider = QFrame()
+                self.divider.setObjectName("sidebarHeaderDivider")
+                self.divider.setFrameShape(
+                    QFrame.Shape.NoFrame,
+                )
+                self.divider.setProperty(
+                    "dividerRole",
+                    DividerRole.DEFAULT.value,
+                )
+                self.divider.setFixedHeight(
+                    self.metrics.border_thin,
+                )
+
+                self.section_label2 = QLabel("Terminal")
+                self.section_label2.setProperty(
+                    "textRole",
+                    TextRole.SECTION_TITLE.value,
+                )
+                self.main_layout.addWidget(self.divider)
+                self.main_layout.addSpacing(self.metrics.space_10)
+                self.main_layout.addWidget(self.section_label2)
+
+                for i in SPEC_BUTTONS:
+                    button = QPushButton(i)
+
+                    button.setProperty(
+                        "buttonVariant",
+                        ButtonVariant.NAVIGATION.value,
+                    )
+
+                    self.main_layout.addWidget(button)
+
+                self.divider = QFrame()
+                self.divider.setObjectName("sidebarHeaderDivider")
+                self.divider.setFrameShape(
+                    QFrame.Shape.NoFrame,
+                )
+                self.divider.setProperty(
+                    "dividerRole",
+                    DividerRole.DEFAULT.value,
+                )
+                self.divider.setFixedHeight(
+                    self.metrics.border_thin,
+                )
+
+                self.section_label2 = QLabel("Sessions")
+                self.section_label2.setProperty(
+                    "textRole",
+                    TextRole.SECTION_TITLE.value,
+                )
+                self.main_layout.addWidget(self.divider)
+                self.main_layout.addSpacing(self.metrics.space_10)
+                self.main_layout.addWidget(self.section_label2)
+
+            if definition.id == "manage_sessions":
+                self.divider = QFrame()
+                self.divider.setObjectName("sidebarHeaderDivider")
+                self.divider.setFrameShape(
+                    QFrame.Shape.NoFrame,
+                )
+                self.divider.setProperty(
+                    "dividerRole",
+                    DividerRole.DEFAULT.value,
+                )
+                self.divider.setFixedHeight(
+                    self.metrics.border_thin,
+                )
+
+                self.section_label2 = QLabel("History")
+                self.section_label2.setProperty(
+                    "textRole",
+                    TextRole.SECTION_TITLE.value,
+                )
+                self.main_layout.addWidget(self.divider)
+                self.main_layout.addSpacing(self.metrics.space_10)
+                self.main_layout.addWidget(self.section_label2)
+
         self.main_layout.addStretch()
 
-    def set_active_page(
-        self,
-        page_id: CLIPageId,
-    ) -> None:
+    def set_active_page(self, page_id: str) -> None:
         self.page_buttons[page_id].setChecked(True)

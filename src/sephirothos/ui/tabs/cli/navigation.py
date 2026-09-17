@@ -1,16 +1,5 @@
-"""CLI tab page identities."""
+"""CLI tab navigation."""
 
-from enum import StrEnum
+from .pages import DEFAULT_CLI_PAGE
 
-
-class CLIPageId(StrEnum):
-    GET_STARTED = "get_started"
-
-
-CLI_PAGE_LABELS: dict[CLIPageId, str] = {
-    CLIPageId.GET_STARTED: "Get Started",
-}
-
-CLI_PAGE_ORDER: tuple[CLIPageId, ...] = (CLIPageId.GET_STARTED,)
-
-DEFAULT_CLI_PAGE = CLIPageId.GET_STARTED
+__all__ = ["DEFAULT_CLI_PAGE"]

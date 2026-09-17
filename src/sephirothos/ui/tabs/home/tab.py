@@ -8,13 +8,8 @@ from PySide6.QtWidgets import (
 
 from sephirothos.ui.metrics import UiMetrics
 from sephirothos.ui.roles import SurfaceRole
-from sephirothos.ui.tabs.home.navigation import (
-    DEFAULT_HOME_PAGE,
-    HomePageId,
-)
-from sephirothos.ui.tabs.home.pages import (
-    dashboard_page
-)
+
+from .pages import PAGES, DEFAULT_HOME_PAGE
 
 
 class HomeTab(QWidget):
@@ -22,7 +17,7 @@ class HomeTab(QWidget):
 
     def __init__(
         self,
-         metrics: UiMetrics,
+        metrics: UiMetrics,
     ) -> None:
         super().__init__()
 
@@ -47,14 +42,19 @@ class HomeTab(QWidget):
             SurfaceRole.TRANSPARENT.value,
         )
 
-        self.pages: dict[HomePageId, QWidget] = {
-            HomePageId.DASHBOARD: dashboard_page(
-                metrics=self.metrics,
-            ),
-        }
+        self.pages: dict[str, QWidget] = {}
 
-        for page in self.pages.values():
+        for definition in PAGES:
+            page = definition.page(
+                metrics=self.metrics,
+            )
+
+            self.pages[definition.id] = page
             self.page_stack.addWidget(page)
 
-    def set_active_page(self, page_id: HomePageId) -> None:
-        self.page_stack.setCurrentWidget(self.pages[page_id])
+        self.main_layout.addWidget(self.page_stack)
+
+    def set_active_page(self, page_id: str) -> None:
+        self.page_stack.setCurrentWidget(
+            self.pages[page_id],
+        )
