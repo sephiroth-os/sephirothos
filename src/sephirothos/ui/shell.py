@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import partial
 from random import choice
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QVBoxLayout, QWidget, QButtonGroup, QStackedWidget, QLabel
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QVBoxLayout, QWidget, QButtonGroup, QStackedWidget, QLabel, \
+    QPushButton, QSizePolicy
 
 from sephirothos.config import AppConfig
 from sephirothos.content.window_titles import WINDOW_TITLES
@@ -19,6 +21,18 @@ from sephirothos.ui.tabs.navigation import (
     TAB_ORDER,
     TabId,
 )
+from sephirothos.ui.tabs.apps.bar import AppsBar
+from sephirothos.ui.tabs.apps.tab import AppsTab
+
+from ui.tabs.home.bar import HomeBar
+from ui.tabs.home.tab import HomeTab
+
+from ui.tabs.settings.bar import SettingsBar
+from ui.tabs.settings.tab import SettingsTab
+
+from ui.tabs.cli.bar import CLIBar
+from ui.tabs.cli.tab import CLITab
+
 
 @dataclass(frozen=True, slots=True)
 class TabPair:
@@ -37,7 +51,7 @@ class Shell(QWidget):
         self.metrics = metrics
 
         self.tab_pairs: dict[TabId, TabPair] = {}
-        self.tab_buttons: dict[TabId, TabPair] = {}
+        self.tab_buttons: dict[TabId, QPushButton] = {}
         self.current_tab: TabId | None = None
 
         self.setWindowTitle(choice(WINDOW_TITLES))
@@ -47,6 +61,9 @@ class Shell(QWidget):
         self.setProperty("surfaceRole", SurfaceRole.BACKGROUND.value)
 
         self._build_shell()
+        self._register_tabs()
+        self._build_top_navigation()
+        self.set_active_tab(DEFAULT_TAB)
 
     def _build_shell(self) -> None:
         self.main_layout = QVBoxLayout(self)
@@ -66,12 +83,7 @@ class Shell(QWidget):
         self.top_bar.setMinimumHeight(self.metrics.top_bar_height)
 
         self.top_bar_layout = QHBoxLayout(self.top_bar)
-        self.top_bar_layout.setContentsMargins(
-            self.metrics.space_10,
-            self.metrics.space_10,
-            self.metrics.space_10,
-            self.metrics.space_10,
-        )
+        self.top_bar_layout.setContentsMargins(0, 0, 0, 0)
         self.top_bar_layout.setSpacing(0)
 
         self.tab_button_group = QButtonGroup(self)
@@ -94,7 +106,7 @@ class Shell(QWidget):
         self._build_content_area()
 
         self.workspace_layout.addWidget(self.sidebar)
-        self.workspace_layout.addWidget(self.content_area, 1)
+        self.workspace_layout.addWidget(self.content_stack, 1)
 
     def _build_sidebar(self) -> None:
         self.sidebar = QWidget()
@@ -163,5 +175,99 @@ class Shell(QWidget):
         )
 
     def _build_content_area(self) -> None:
-        self.content_area = QWidget()
-        self.content_area.setProperty("surfaceRole", SurfaceRole.PANEL.value)
+        self.content_stack = QStackedWidget()
+        self.content_stack.setProperty(
+            "surfaceRole",
+            SurfaceRole.PANEL.value,
+        )
+
+    def _register_tabs(self) -> None:
+        """Create and register every tab/bar pair."""
+
+        home_bar = HomeBar(self.metrics)
+        home_tab = HomeTab(self.metrics)
+
+        apps_bar = AppsBar(self.metrics)
+        apps_tab = AppsTab(self.metrics)
+
+        settings_bar = SettingsBar(self.metrics)
+        settings_tab = SettingsTab(self.metrics)
+
+        cli_bar = CLIBar(self.metrics)
+        cli_tab = CLITab(self.metrics)
+
+        self.tab_pairs = {
+            TabId.HOME: TabPair(
+                bar=home_bar,
+                tab=home_tab,
+            ),
+            TabId.APPS: TabPair(
+                bar=apps_bar,
+                tab=apps_tab,
+            ),
+            TabId.SETTINGS: TabPair(
+                bar=settings_bar,
+                tab=settings_tab,
+            ),
+            TabId.CLI: TabPair(
+                bar=cli_bar,
+                tab=cli_tab,
+            )
+        }
+
+        for tab_id in TAB_ORDER:
+            pair = self.tab_pairs[tab_id]
+
+            self.bar_stack.addWidget(pair.bar)
+            self.content_stack.addWidget(pair.tab)
+
+    def _build_top_navigation(self) -> None:
+        """Create the top-level tab buttons."""
+
+        for tab_id in TAB_ORDER:
+            button = QPushButton(TAB_LABELS[tab_id])
+            button.setObjectName(f"{tab_id.value}TabButton")
+            button.setCheckable(True)
+            button.setProperty(
+                "buttonVariant",
+                ButtonVariant.NAVIGATION.value,
+            )
+
+            button.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+
+            button.clicked.connect(
+                partial(
+                    self._handle_tab_button,
+                    tab_id
+                )
+            )
+
+            self.tab_button_group.addButton(button)
+            self.tab_buttons[tab_id] = button
+
+            self.top_bar_layout.addWidget(button, 1)
+
+        self.top_bar_layout.addStretch(2)
+
+    def _handle_tab_button(
+        self,
+        tab_id: TabId,
+        _checked: bool = False,
+    ) -> None:
+        """Handle a top-level navigation-button click."""
+
+        self.set_active_tab(tab_id)
+
+    def set_active_tab(
+        self,
+        tab_id: TabId,
+    ) -> None:
+        """Display the bar and content registered to a tab."""
+
+        pair = self.tab_pairs[tab_id]
+
+        self.bar_stack.setCurrentWidget(pair.bar)
+        self.content_stack.setCurrentWidget(pair.tab)
+        self.tab_buttons[tab_id].setChecked(True)
+
+        self.current_tab = tab_id

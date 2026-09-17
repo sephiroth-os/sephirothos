@@ -318,6 +318,9 @@ def _button_styles(palette: ThemePalette, metrics: UiMetrics) -> str:
             background-color: transparent;
             color: {palette.accent_selected};
         }}
+        
+        QPushButton[buttonVariant="navigation"] {{
+        }}
     """
 
 
