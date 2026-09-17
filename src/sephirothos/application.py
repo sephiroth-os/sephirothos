@@ -16,6 +16,7 @@ from sephirothos.metadata import (
     ORGANIZATION_NAME,
     VERSION,
 )
+from sephirothos.services.background_music import BackgroundMusicService
 from sephirothos.services.display_scale import DisplayScaleService
 from sephirothos.services.theme import ThemeService
 from sephirothos.ui.metrics import UiMetrics
@@ -44,7 +45,12 @@ class SephirothOS:
 
         self.shell = None
 
-        #todo: bgm soon
+        self.background_music = BackgroundMusicService(
+            parent=self.qt
+        )
+        self.qt.aboutToQuit.connect(
+            self.background_music.stop
+        )
 
         self._connect_events()
         self.theme.apply_current()
@@ -53,6 +59,8 @@ class SephirothOS:
     def run(self) -> int:
         self.shell = Shell(self, config=self.config, event_bus=self.event_bus, metrics=self.metrics)
         self.shell.show()
+
+        self.background_music.play()
 
         return self.qt.exec()
 
