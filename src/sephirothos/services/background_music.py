@@ -28,12 +28,18 @@ class BackgroundMusicService(QObject):
     def play(self) -> None:
         """Begin or resume background-music playback."""
 
-        self.media_player.play()
+        if not self.media_player.isPlaying():
+            self.media_player.play()
 
     def stop(self) -> None:
         """Stop background-music playback."""
 
         self.media_player.stop()
+
+    def pause(self) -> None:
+        """Pause background-music playback."""
+
+        self.media_player.pause()
 
     def set_volume(self, volume: float) -> None:
         """Set normalized playback volume."""

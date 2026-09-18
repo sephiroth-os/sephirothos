@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from events import EventBus
 from sephirothos.ui.metrics import UiMetrics
 from sephirothos.ui.roles import SurfaceRole
 
@@ -18,10 +19,12 @@ class SettingsTab(QWidget):
     def __init__(
         self,
         metrics: UiMetrics,
+        event_bus: EventBus,
     ) -> None:
         super().__init__()
 
         self.metrics = metrics
+        self.event_bus = event_bus
 
         self.setProperty(
             "surfaceRole",
@@ -47,6 +50,7 @@ class SettingsTab(QWidget):
         for definition in PAGES:
             page = definition.page(
                 metrics=self.metrics,
+                event_bus=self.event_bus
             )
 
             self.pages[definition.id] = page

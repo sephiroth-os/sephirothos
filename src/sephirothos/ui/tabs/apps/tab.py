@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from events import EventBus
 from sephirothos.ui.metrics import UiMetrics
 from sephirothos.ui.roles import SurfaceRole
 from sephirothos.ui.tabs.apps.navigation import (
@@ -22,11 +23,13 @@ class AppsTab(QWidget):
 
     def __init__(
         self,
-         metrics: UiMetrics,
+        metrics: UiMetrics,
+        event_bus: EventBus,
     ) -> None:
         super().__init__()
 
         self.metrics = metrics
+        self.event_bus = event_bus
 
         self.setProperty(
             "surfaceRole",
@@ -50,6 +53,7 @@ class AppsTab(QWidget):
         self.pages: dict[AppsPageId, QWidget] = {
             AppsPageId.ALL: all_page(
                 metrics=self.metrics,
+                event_bus=self.event_bus
             ),
         }
 

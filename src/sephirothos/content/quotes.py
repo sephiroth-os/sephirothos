@@ -80,4 +80,5 @@ QUOTES: tuple[Quote, ...] = (
     Quote("Showing your back to the enemy? Overconfidence will destroy you..."),
     Quote("Angeal!"),
     Quote("You're annoying."),
+    Quote("Quoth the Roth.")
 )

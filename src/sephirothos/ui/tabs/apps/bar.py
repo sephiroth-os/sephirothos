@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from events import EventBus
 from sephirothos.ui.metrics import UiMetrics
 from sephirothos.ui.roles import (
     ButtonVariant,
@@ -27,10 +28,11 @@ class AppsBar(QWidget):
 
     page_requested = Signal(object)
 
-    def __init__(self, metrics: UiMetrics) -> None:
+    def __init__(self, metrics: UiMetrics, event_bus: EventBus) -> None:
         super().__init__()
 
         self.metrics = metrics
+        self.event_bus = event_bus
 
         self.setProperty(
             "surfaceRole",

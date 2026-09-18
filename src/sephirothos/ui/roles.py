@@ -17,17 +17,18 @@ class ButtonVariant(StrEnum):
     NAVIGATION = "navigation"
     SECONDARY = "secondary"
     SELECTABLE = "selectable"
-    CARD_ACTION = "card-action"
+    CARD_ACTION = "widgets-action"
     PRIMARY = "primary"
     ACCENT_OUTLINE = "accent-outline"
     THEME_OPTION = "theme-option"
     LINK = "link"
+    START = "start"
 
 
 class TextRole(StrEnum):
     PAGE_TITLE = "page-title"
     PAGE_SUBTITLE = "page-subtitle"
-    CARD_TITLE = "card-title"
+    CARD_TITLE = "widgets-title"
     CAPTION = "caption"
     BODY = "body"
     BODY_MUTED = "body-muted"

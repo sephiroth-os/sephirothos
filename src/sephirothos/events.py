@@ -13,3 +13,6 @@ class EventBus(QObject):
     appearance_apply_requested = Signal(object)
     appearance_applied = Signal(object)
     appearance_apply_failed = Signal(str)
+
+    pause_music = Signal()
+    resume_music = Signal()

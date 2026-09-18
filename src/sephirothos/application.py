@@ -76,6 +76,12 @@ class SephirothOS:
         self.event_bus.appearance_apply_requested.connect(
             self._apply_appearance,
         )
+        self.event_bus.pause_music.connect(
+            self.background_music.pause,
+        )
+        self.event_bus.resume_music.connect(
+            self.background_music.play,
+        )
 
     @staticmethod
     def _create_display_scale(config: AppConfig) -> DisplayScaleService:

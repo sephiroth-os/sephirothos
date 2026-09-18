@@ -184,17 +184,33 @@ class Shell(QWidget):
     def _register_tabs(self) -> None:
         """Create and register every tab/bar pair."""
 
-        home_bar = HomeBar(self.metrics)
-        home_tab = HomeTab(self.metrics)
+        home_bar = HomeBar(self.metrics, self.event_bus)
+        home_tab = HomeTab(self.metrics, self.event_bus)
 
-        apps_bar = AppsBar(self.metrics)
-        apps_tab = AppsTab(self.metrics)
+        home_bar.page_requested.connect(
+            home_tab.set_active_page,
+        )
 
-        settings_bar = SettingsBar(self.metrics)
-        settings_tab = SettingsTab(self.metrics)
+        apps_bar = AppsBar(self.metrics, self.event_bus)
+        apps_tab = AppsTab(self.metrics, self.event_bus)
 
-        cli_bar = CLIBar(self.metrics)
-        cli_tab = CLITab(self.metrics)
+        apps_bar.page_requested.connect(
+            apps_tab.set_active_page,
+        )
+
+        settings_bar = SettingsBar(self.metrics, self.event_bus)
+        settings_tab = SettingsTab(self.metrics, self.event_bus)
+
+        settings_bar.page_requested.connect(
+            settings_tab.set_active_page,
+        )
+
+        cli_bar = CLIBar(self.metrics, self.event_bus)
+        cli_tab = CLITab(self.metrics, self.event_bus)
+
+        cli_bar.page_requested.connect(
+            cli_tab.set_active_page,
+        )
 
         self.tab_pairs = {
             TabId.HOME: TabPair(
