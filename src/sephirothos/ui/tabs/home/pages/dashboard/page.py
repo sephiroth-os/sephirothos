@@ -5,10 +5,10 @@ from random import choice
 from PySide6.QtCore import QTimer, Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 
-from content.subtitles import HOME_SUBTITLES
-from events import EventBus
-from ui.metrics import UiMetrics
-from ui.roles import SurfaceRole, TextRole
+from sephirothos.content.subtitles import HOME_SUBTITLES
+from sephirothos.events import EventBus
+from sephirothos.ui.metrics import UiMetrics
+from sephirothos.ui.roles import SurfaceRole, TextRole
 
 from .cards import (
     WeatherCard,

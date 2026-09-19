@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import QWidget
 
-from events import EventBus
-from ui.metrics import UiMetrics
-from ui.widgets.card import Card
+from sephirothos.events import EventBus
+from sephirothos.ui.metrics import UiMetrics
+from sephirothos.ui.widgets.card import Card
 
 
 class WeatherCard(Card):

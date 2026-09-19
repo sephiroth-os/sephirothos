@@ -4,9 +4,9 @@ from random import choice
 
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 
-from events import EventBus
-from ui.metrics import UiMetrics
-from ui.roles import SurfaceRole
+from sephirothos.events import EventBus
+from sephirothos.ui.metrics import UiMetrics
+from sephirothos.ui.roles import SurfaceRole
 
 from .cards import TaxesCard
 

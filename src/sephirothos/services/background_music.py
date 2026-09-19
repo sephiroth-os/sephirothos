@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import assets.audio.background_music_rc
+import sephirothos.assets.audio.background_music_rc
 
 from PySide6.QtCore import QObject, QUrl
 from PySide6.QtMultimedia import QAudioOutput, QMediaPlayer

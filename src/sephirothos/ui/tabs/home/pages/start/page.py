@@ -2,8 +2,8 @@
 
 from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout
 
-from events import EventBus
-from ui.metrics import UiMetrics
+from sephirothos.events import EventBus
+from sephirothos.ui.metrics import UiMetrics
 
 from sephirothos.ui.roles import (
     SurfaceRole,

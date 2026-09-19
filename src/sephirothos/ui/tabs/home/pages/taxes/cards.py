@@ -4,9 +4,9 @@ import sephirothos.assets.videos.taxes_rc
 
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QSizePolicy
 
-from events import EventBus
-from ui.metrics import UiMetrics
-from ui.widgets.card import Card
+from sephirothos.events import EventBus
+from sephirothos.ui.metrics import UiMetrics
+from sephirothos.ui.widgets.card import Card
 
 from PySide6.QtCore import QUrl, Qt
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
