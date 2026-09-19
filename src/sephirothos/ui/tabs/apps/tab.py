@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from events import EventBus
+from sephirothos.events import EventBus
 from sephirothos.ui.metrics import UiMetrics
 from sephirothos.ui.roles import SurfaceRole
 from sephirothos.ui.tabs.apps.navigation import (

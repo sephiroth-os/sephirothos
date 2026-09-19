@@ -69,6 +69,10 @@ AVAILABLE_THEMES: dict[ThemeId, ThemeDefinition] = {
     ThemeId.BISEXUAL: ThemeDefinition(
         palette=THEME_BISEXUAL,
         supports_custom_accent=True,
+    ),
+    ThemeId.SATAN: ThemeDefinition(
+        palette=THEME_SATAN,
+        supports_custom_accent=True
     )
 }
 

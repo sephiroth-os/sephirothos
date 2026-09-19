@@ -1,5 +1,4 @@
 import sys
-
 from sephirothos.application import SephirothOS
 
 

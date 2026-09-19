@@ -23,6 +23,7 @@ class ButtonVariant(StrEnum):
     THEME_OPTION = "theme-option"
     LINK = "link"
     START = "start"
+    INFO = "info"
 
 
 class TextRole(StrEnum):
@@ -43,6 +44,7 @@ class TextRole(StrEnum):
     WELCOME_PAGE_SUBTITLE = "welcome-page-subtitle"
     ACCENT_SUBTITLE = "accent-subtitle"
     ACCENT_BODY = "accent-body"
+    DANGER = "danger"
 
 
 class Tone(StrEnum):

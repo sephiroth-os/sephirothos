@@ -82,6 +82,7 @@ class AppConfig:
     schema_version: int = CURRENT_SCHEMA_VERSION
     username: str = "User"
     onboarding_complete: bool = False
+    update_in_progress: bool = False
     appearance: AppearanceConfig = field(default_factory=AppearanceConfig)
 
     @classmethod
@@ -96,14 +97,12 @@ class AppConfig:
         if not isinstance(schema_version, int) or isinstance(schema_version, bool):
             raise ConfigurationError("schema_version must be an integer.")
 
-        if schema_version not in (
-            CURRENT_SCHEMA_VERSION,
-            LEGACY_SCHEMAS,
-        ):
+        if schema_version != CURRENT_SCHEMA_VERSION and schema_version not in LEGACY_SCHEMAS:
             raise ConfigurationError(f"Unsupported configuration schema: {schema_version}")
 
         username = _required_string(data, key="username", default="User")
         onboarding_complete = data.get("onboarding_complete", False)
+        update_in_progress = data.get("update_in_progress", False)
 
         if not isinstance(onboarding_complete, bool):
             raise ConfigurationError("onboarding_complete must be boolean.")
@@ -119,12 +118,13 @@ class AppConfig:
             if not isinstance(raw_appearance, Mapping):
                 raise ConfigurationError("appearance must be an object.")
 
-            appearance_data = raw_appearance.get("appearance", {})
+            appearance_data = raw_appearance
 
         return cls(
             schema_version=schema_version,
             username=username,
             onboarding_complete=onboarding_complete,
+            update_in_progress=update_in_progress,
             appearance=AppearanceConfig.from_mapping(appearance_data),
         )
 
@@ -200,8 +200,12 @@ class ConfigStore:
 
             os.replace(temporary_path, self.path)
 
+
         except OSError as error:
             if temporary_path is not None:
+
                 temporary_path.unlink(missing_ok=True)
 
-                raise ConfigurationError(f"Could not save configuration from {self.path}") from error
+            raise ConfigurationError(
+                f"Could not save configuration to {self.path}"
+            ) from error

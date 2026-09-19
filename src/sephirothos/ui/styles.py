@@ -236,6 +236,12 @@ def _text_styles(palette: ThemePalette, metrics: UiMetrics) -> str:
             font-size: {metrics.font_emphasis}px;
             font-weight: 500;
         }}
+        
+        QLabel[textRole="danger"] {{
+            color: {palette.danger};
+            font-size: {metrics.font_caption}px;
+            font-weight: 500;
+        }}
     """
 
 
@@ -321,6 +327,10 @@ def _button_styles(palette: ThemePalette, metrics: UiMetrics) -> str:
         
         QPushButton[buttonVariant="navigation"] {{
         }}
+        
+        QToolButton[buttonVariant="info"] {{
+            border: {metrics.border_thin}px solid {palette.border_strong};
+        }}
     """
 
 
@@ -345,6 +355,7 @@ def _input_styles(palette: ThemePalette, metrics: UiMetrics) -> str:
         QPlainTextEdit[inputRole="editor"]:hover,
         QComboBox[inputRole="combo"]:hover {{
             background-color: {palette.hover};
+            border-radius: 0px;
         }}
 
         QLineEdit[inputRole="search"]:focus,

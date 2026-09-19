@@ -4,7 +4,7 @@ import os
 from collections.abc import Mapping
 from pathlib import Path
 
-from sephirothos.metadata import APPLICATION_NAME, ORGANIZATION_NAME
+from sephirothos.metadata import APPLICATION_NAME
 
 
 class PathConfigurationError(RuntimeError):
@@ -22,7 +22,7 @@ def app_data_directory(
     if not appdata:
         raise PathConfigurationError("The APPDATA environment variable is unavailable.")
 
-    return Path(appdata) / ORGANIZATION_NAME / APPLICATION_NAME
+    return Path(appdata) / "Oxygen" / APPLICATION_NAME
 
 
 def config_path(environment: Mapping[str, str] | None = None) -> Path:

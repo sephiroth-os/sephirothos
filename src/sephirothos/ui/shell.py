@@ -24,14 +24,14 @@ from sephirothos.ui.tabs.navigation import (
 from sephirothos.ui.tabs.apps.bar import AppsBar
 from sephirothos.ui.tabs.apps.tab import AppsTab
 
-from ui.tabs.home.bar import HomeBar
-from ui.tabs.home.tab import HomeTab
+from sephirothos.ui.tabs.home.bar import HomeBar
+from sephirothos.ui.tabs.home.tab import HomeTab
 
-from ui.tabs.settings.bar import SettingsBar
-from ui.tabs.settings.tab import SettingsTab
+from sephirothos.ui.tabs.settings.bar import SettingsBar
+from sephirothos.ui.tabs.settings.tab import SettingsTab
 
-from ui.tabs.cli.bar import CLIBar
-from ui.tabs.cli.tab import CLITab
+from sephirothos.ui.tabs.cli.bar import CLIBar
+from sephirothos.ui.tabs.cli.tab import CLITab
 
 
 @dataclass(frozen=True, slots=True)
@@ -80,7 +80,7 @@ class Shell(QWidget):
         self.top_bar = QWidget()
         self.top_bar.setProperty("surfaceRole", SurfaceRole.CHROME.value)
 
-        self.top_bar.setMinimumHeight(self.metrics.top_bar_height)
+        self.top_bar.setFixedHeight(self.metrics.top_bar_height)
 
         self.top_bar_layout = QHBoxLayout(self.top_bar)
         self.top_bar_layout.setContentsMargins(0, 0, 0, 0)
