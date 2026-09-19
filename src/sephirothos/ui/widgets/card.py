@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QSizePolicy, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QSizePolicy, QVBoxLayout, QWidget, QLabel
 
 from sephirothos.events import EventBus
 from sephirothos.ui.metrics import UiMetrics
-from sephirothos.ui.roles import SurfaceRole
+from sephirothos.ui.roles import SurfaceRole, TextRole
 
 
 class Card(QWidget):
@@ -42,3 +42,7 @@ class Card(QWidget):
             self.metrics.space_20,
         )
         self.main_layout.setSpacing(metrics.space_20)
+
+        self.title = QLabel("Title Here")
+        self.title.setProperty("textRole", TextRole.CARD_TITLE.value)
+        self.main_layout.addWidget(self.title, alignment=Qt.AlignmentFlag.AlignTop)

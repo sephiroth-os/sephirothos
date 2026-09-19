@@ -16,6 +16,8 @@ class WeatherCard(Card):
 
         self._metrics = metrics
 
+        self.title.setText("Weather")
+
 
 class TipCard(Card):
     def __init__(
@@ -27,6 +29,8 @@ class TipCard(Card):
         super().__init__(metrics, event_bus, parent)
 
         self._metrics = metrics
+
+        self.title.setText("Daily Tip")
 
 
 class QuoteCard(Card):
@@ -40,6 +44,8 @@ class QuoteCard(Card):
 
         self._metrics = metrics
 
+        self.title.setText("Quote of the Day")
+
 
 class PerformanceCard(Card):
     def __init__(
@@ -51,6 +57,8 @@ class PerformanceCard(Card):
         super().__init__(metrics, event_bus, parent)
 
         self._metrics = metrics
+
+        self.title.setText("Performance")
 
 
 class NASDAQCard(Card):
@@ -64,6 +72,8 @@ class NASDAQCard(Card):
 
         self._metrics = metrics
 
+        self.title.setText("NVIDIA Stock")
+
 
 class QuickCard(Card):
     def __init__(
@@ -76,6 +86,8 @@ class QuickCard(Card):
 
         self._metrics = metrics
 
+        self.title.setText("Quick Apps")
+
 
 class MeterCard(Card):
     def __init__(
@@ -87,3 +99,5 @@ class MeterCard(Card):
         super().__init__(metrics, event_bus, parent)
 
         self._metrics = metrics
+
+        self.title.setText("Piss O' Meter")

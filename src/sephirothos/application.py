@@ -21,6 +21,7 @@ from sephirothos.metadata import (
     APPLICATION_NAME,
     ORGANIZATION_NAME,
     VERSION,
+    MIRAGE
 )
 from sephirothos.services.background_music import BackgroundMusicService
 from sephirothos.services.display_scale import DisplayScaleService
@@ -76,16 +77,17 @@ class SephirothOS:
 
 
     def run(self) -> int:
-
-        if self.config.onboarding_complete:
-            self.shell = Shell(self, config=self.config, event_bus=self.event_bus, metrics=self.metrics)
-            self.shell.show()
+        if MIRAGE:
+            self.override_view()
         else:
-            self.mirage = Mirage(self, self.metrics, self.event_bus)
-            # self.alt_shell = OnboardingShell(self, config=self.config, event_bus=self.event_bus, metrics=self.metrics)
-            # self.alt_shell.show()
+            if not self.config.onboarding_complete:
+                self.shell = Shell(self, config=self.config, event_bus=self.event_bus, metrics=self.metrics)
+                self.shell.show()
+            else:
+                self.alt_shell = OnboardingShell(self, config=self.config, event_bus=self.event_bus, metrics=self.metrics)
+                self.alt_shell.show()
 
-        # self.background_music.play()
+            self.background_music.play()
         self.update_service.check()
 
         return self.qt.exec()
@@ -221,3 +223,6 @@ class SephirothOS:
                 time.sleep(0.5)
 
         print("[updater]: Could not finalize updater update.")
+
+    def override_view(self) -> None:
+        self.mirage = Mirage(self, self.metrics, self.event_bus)

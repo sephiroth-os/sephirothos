@@ -9,13 +9,8 @@ from PySide6.QtWidgets import (
 from sephirothos.events import EventBus
 from sephirothos.ui.metrics import UiMetrics
 from sephirothos.ui.roles import SurfaceRole
-from sephirothos.ui.tabs.apps.navigation import (
-    DEFAULT_APPS_PAGE,
-    AppsPageId,
-)
-from sephirothos.ui.tabs.apps.pages import (
-    all_page
-)
+
+from .pages import PAGES, DEFAULT_APPS_PAGE
 
 
 class AppsTab(QWidget):
@@ -50,15 +45,20 @@ class AppsTab(QWidget):
             SurfaceRole.TRANSPARENT.value,
         )
 
-        self.pages: dict[AppsPageId, QWidget] = {
-            AppsPageId.ALL: all_page(
-                metrics=self.metrics,
-                event_bus=self.event_bus
-            ),
-        }
+        self.pages: dict[str, QWidget] = {}
 
-        for page in self.pages.values():
+        for definition in PAGES:
+            page = definition.page(
+                metrics=self.metrics,
+                event_bus=self.event_bus,
+            )
+
+            self.pages[definition.id] = page
             self.page_stack.addWidget(page)
 
-    def set_active_page(self, page_id: AppsPageId) -> None:
-        self.page_stack.setCurrentWidget(self.pages[page_id])
+        self.main_layout.addWidget(self.page_stack)
+
+    def set_active_page(self, page_id: str) -> None:
+        self.page_stack.setCurrentWidget(
+            self.pages[page_id],
+        )

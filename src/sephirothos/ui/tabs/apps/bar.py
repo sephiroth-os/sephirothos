@@ -3,6 +3,7 @@
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
     QButtonGroup,
+    QFrame,
     QLabel,
     QPushButton,
     QVBoxLayout,
@@ -15,13 +16,10 @@ from sephirothos.ui.roles import (
     ButtonVariant,
     SurfaceRole,
     TextRole,
-)
-from sephirothos.ui.tabs.apps.navigation import (
-    DEFAULT_APPS_PAGE,
-    APPS_PAGE_LABELS,
-    AppsPageId,
+    DividerRole,
 )
 
+from .pages import PAGES, DEFAULT_APPS_PAGE
 
 class AppsBar(QWidget):
     """Navigation contents displayed inside the shell sidebar."""
@@ -55,32 +53,33 @@ class AppsBar(QWidget):
             TextRole.SECTION_TITLE.value,
         )
 
-        self.all_button = QPushButton(APPS_PAGE_LABELS[AppsPageId.ALL])
-        self.all_button.setCheckable(True)
-        self.all_button.setProperty(
-            "buttonVariant",
-            ButtonVariant.NAVIGATION.value,
-        )
-        self.all_button.clicked.connect(
-            lambda _checked=False: self.page_requested.emit(AppsPageId.ALL)
-        )
-
-        self.page_buttons = {
-            AppsPageId.ALL: self.all_button,
-        }
-
         self.page_button_group = QButtonGroup(self)
         self.page_button_group.setExclusive(True)
-        self.page_button_group.addButton(
-            self.all_button,
-        )
+
+        self.page_buttons: dict[str, QPushButton] = {}
 
         self.main_layout.addWidget(self.section_label)
-        self.main_layout.addWidget(self.all_button)
+
+        for definition in PAGES:
+            button = QPushButton(definition.label)
+
+            button.setCheckable(True)
+            button.setProperty(
+                "buttonVariant",
+                ButtonVariant.NAVIGATION.value,
+            )
+
+            button.clicked.connect(
+                lambda _checked=False, page_id=definition.id:
+                    self.page_requested.emit(page_id)
+            )
+
+            self.page_buttons[definition.id] = button
+            self.page_button_group.addButton(button)
+
+            self.main_layout.addWidget(button)
+
         self.main_layout.addStretch()
 
-    def set_active_page(
-        self,
-        page_id: AppsPageId,
-    ) -> None:
+    def set_active_page(self, page_id: str) -> None:
         self.page_buttons[page_id].setChecked(True)

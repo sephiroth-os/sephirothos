@@ -1,16 +1,5 @@
-"""Apps tab page identities."""
+"""Apps tab navigation."""
 
-from enum import StrEnum
+from .pages import DEFAULT_APPS_PAGE
 
-
-class AppsPageId(StrEnum):
-    ALL = "all"
-
-
-APPS_PAGE_LABELS: dict[AppsPageId, str] = {
-    AppsPageId.ALL: "All",
-}
-
-APPS_PAGE_ORDER: tuple[AppsPageId, ...] = (AppsPageId.ALL,)
-
-DEFAULT_APPS_PAGE = AppsPageId.ALL
+__all__ = ["DEFAULT_APPS_PAGE"]

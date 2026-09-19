@@ -43,7 +43,6 @@ class UpdateWorker(QObject):
                     self.finished.emit(
                         UpdateInfo(
                             latest_version,
-                            asset["browser_download_url"],
                         )
                     )
                     return
