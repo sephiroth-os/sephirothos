@@ -9,4 +9,10 @@ WINDOW_TITLES: tuple[str, ...] = (
     "Buckets of Piss",
     "Don has Crabs",
     "Cxompanaion",
+    "Piss",
+    "Robert Loggia",
+    "Slay the Spire 3",
+    "I Don't Know",
+    "CloudOS",
+    ""
 )

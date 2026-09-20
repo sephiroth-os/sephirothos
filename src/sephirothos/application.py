@@ -80,7 +80,7 @@ class SephirothOS:
         if MIRAGE:
             self.override_view()
         else:
-            if not self.config.onboarding_complete:
+            if self.config.onboarding_complete:
                 self.shell = Shell(self, config=self.config, event_bus=self.event_bus, metrics=self.metrics)
                 self.shell.show()
             else:

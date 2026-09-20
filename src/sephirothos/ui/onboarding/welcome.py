@@ -98,6 +98,7 @@ class OnboardingShell(QWidget):
         self.ac_page = ACPage(self, metrics=self.metrics, event_bus=self.event_bus)
         self.onedrive_page = OneDrivePage(self, metrics=self.metrics, event_bus=self.event_bus)
         self.personalization_page = PersonalizationPage(self, metrics=self.metrics, event_bus=self.event_bus)
+        self.done_page = DonePage(self, metrics=self.metrics, event_bus=self.event_bus)
 
         self.content_stack.addWidget(self.welcome_page)
         self.content_stack.addWidget(self.character_page)
@@ -108,6 +109,7 @@ class OnboardingShell(QWidget):
         self.content_stack.addWidget(self.ac_page)
         self.content_stack.addWidget(self.onedrive_page)
         self.content_stack.addWidget(self.personalization_page)
+        self.content_stack.addWidget(self.done_page)
 
         self.content_stack.setCurrentIndex(0)
         self.showFullScreen()
@@ -577,6 +579,46 @@ class PersonalizationPage(QWidget):
         self.header_layout.addWidget(self.subtitle)
 
         self.main_layout.addLayout(self.header_layout)
+
+        self.row_1 = QHBoxLayout()
+        self.row_1.setContentsMargins(0, 0, 0, 0)
+        self.row_1.setSpacing(self.metrics.space_20)
+
+        self.row_2 = QHBoxLayout()
+        self.row_2.setContentsMargins(0, 0, 0, 0)
+        self.row_2.setSpacing(self.metrics.space_20)
+
+        self.row_3 = QHBoxLayout()
+        self.row_3.setContentsMargins(0, 0, 0, 0)
+        self.row_3.setSpacing(self.metrics.space_20)
+
+        self.theme_card = QWidget()
+        self.theme_card.setProperty("surfaceRole", SurfaceRole.CARD.value)
+        self.row_1.addWidget(self.theme_card, 2)
+
+        self.preview_card = QWidget()
+        self.preview_card.setProperty("surfaceRole", SurfaceRole.CARD.value)
+        self.row_1.addWidget(self.preview_card, 3)
+
+        self.accent_card = QWidget()
+        self.accent_card.setProperty("surfaceRole", SurfaceRole.CARD.value)
+        self.row_2.addWidget(self.accent_card, 3)
+
+        self.display_card = QWidget()
+        self.display_card.setProperty("surfaceRole", SurfaceRole.CARD.value)
+        self.row_2.addWidget(self.display_card, 2)
+
+        self.font_card = QWidget()
+        self.font_card.setProperty("surfaceRole", SurfaceRole.CARD.value)
+        self.row_3.addWidget(self.font_card, 2)
+
+        self.extra_card = QWidget()
+        self.extra_card.setProperty("surfaceRole", SurfaceRole.CARD.value)
+        self.row_3.addWidget(self.extra_card, 3)
+
+        self.main_layout.addLayout(self.row_1, 1)
+        self.main_layout.addLayout(self.row_2, 1)
+        self.main_layout.addLayout(self.row_3, 1)
 
 
 class DonePage(QWidget):

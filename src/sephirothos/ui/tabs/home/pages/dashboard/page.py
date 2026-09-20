@@ -10,6 +10,8 @@ from sephirothos.events import EventBus
 from sephirothos.ui.metrics import UiMetrics
 from sephirothos.ui.roles import SurfaceRole, TextRole
 
+from sephirothos.services.backend.home.pages.dashboard import DashboardBackend
+
 from .cards import (
     WeatherCard,
     TipCard,
@@ -29,6 +31,7 @@ class DashboardPage(QWidget):
 
         self.metrics = metrics
         self.event_bus = event_bus
+        self.backend = DashboardBackend(event_bus)
 
         self.setProperty(
             "surfaceRole",
