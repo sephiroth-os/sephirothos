@@ -2,7 +2,7 @@
 
 APPLICATION_NAME = "SephirothOS"
 ORGANIZATION_NAME = "sephiroth-os"
-VERSION = "0.1.1-a.1"
+VERSION = "0.1.0-a.1-dev.3"
 RELEASE_CHANNEL = "alpha"
 
 REPOSITORY_URL = "https://github.com/sephiroth-os/sephirothos"

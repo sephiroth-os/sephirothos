@@ -2,7 +2,7 @@
 import datetime
 from random import choice
 
-import assets.videos.taxes_rc
+import sephirothos.assets.videos.taxes_rc
 
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QSizePolicy
 from PySide6.QtCore import Qt, QUrl
