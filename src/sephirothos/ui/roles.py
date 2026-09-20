@@ -58,6 +58,13 @@ class ProgressRole(StrEnum):
     DEFAULT = "default"
 
 
+class ProgressVariant(StrEnum):
+    CPU = "cpu"
+    MEMORY = "memory"
+    DISK = "disk"
+    PISS = "piss"
+
+
 class DividerRole(StrEnum):
     DEFAULT = "default"
     STRONG = "strong"

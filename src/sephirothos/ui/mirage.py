@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout
 from PySide6.QtCore import Qt
 
 from sephirothos.ui.metrics import UiMetrics
-from sephirothos.ui.tabs.home.pages.taxes.cards import TaxesCard
+from sephirothos.ui.tabs.home.pages.taxes.page import TaxesCard
 
 
 class Mirage(QWidget):

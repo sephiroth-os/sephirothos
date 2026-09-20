@@ -568,6 +568,22 @@ def _progress_styles(palette: ThemePalette, metrics: UiMetrics) -> str:
         QProgressBar[progressRole="default"][tone="error"]::chunk {{
             background-color: {palette.danger};
         }}
+        
+        QProgressBar[progressRole="default"][progressVariant="cpu"]::chunk {{
+            background-color: #38BDF8;
+        }}
+
+        QProgressBar[progressRole="default"][progressVariant="memory"]::chunk {{
+            background-color: #FF6229;
+        }}
+
+        QProgressBar[progressRole="default"][progressVariant="disk"]::chunk {{
+            background-color: #63E45F;
+        }}
+
+        QProgressBar[progressRole="default"][progressVariant="piss"]::chunk {{
+            background-color: #FFFF00;
+        }}
     """
 
 def apply_accent_palette(
