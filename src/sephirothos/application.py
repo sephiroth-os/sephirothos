@@ -27,7 +27,7 @@ from sephirothos.services.background_music import BackgroundMusicService
 from sephirothos.services.display_scale import DisplayScaleService
 from sephirothos.services.theme import ThemeService
 from sephirothos.ui.metrics import UiMetrics
-from sephirothos.ui.onboarding.welcome import OnboardingShell
+from sephirothos.ui.onboarding import OnboardingShell
 from sephirothos.ui.shell import Shell
 from sephirothos.services.update import UpdateService
 from sephirothos.ui.mirage import Mirage

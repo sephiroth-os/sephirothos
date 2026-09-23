@@ -14,5 +14,12 @@ WINDOW_TITLES: tuple[str, ...] = (
     "Slay the Spire 3",
     "I Don't Know",
     "CloudOS",
-    ""
+    "Geometry Dash",
+    "GeesOrGish",
+    "13 Bottles of Alcohol",
+    "Clash of Clans",
+    "I May or May Not Have Accidentally Invited My Mother to Play Slay the Spire at 2 AM",
+    "CowQueLayTour",
+    "Cauliflower",
+    "Extra Cheese",
 )

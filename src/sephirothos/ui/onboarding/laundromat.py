@@ -1,12 +1,12 @@
-from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout
+from PySide6.QtWidgets import QLabel, QVBoxLayout, QWidget, QHBoxLayout
 from PySide6.QtCore import Qt
 
 from sephirothos.ui.roles import TextRole, SurfaceRole
-
 from sephirothos.events import EventBus
 from sephirothos.ui.metrics import UiMetrics
 
-class WelcomePage(QWidget):
+
+class LaundromatPage(QWidget):
     def __init__(self, application, metrics: UiMetrics, event_bus: EventBus):
         super().__init__()
         self.application = application
@@ -30,16 +30,12 @@ class WelcomePage(QWidget):
         self.header_layout.setContentsMargins(0, 0, 0, 0)
         self.header_layout.setSpacing(0)
 
-        self.main_layout.addStretch()
-
-        self.title = QLabel("Welcome to SephirothOS")
+        self.title = QLabel("Sephiroth's Dishwasher")
         self.title.setProperty("textRole", TextRole.WELCOME_TITLE.value)
         self.header_layout.addWidget(self.title)
 
-        self.subtitle = QLabel("I got called a fatass on Instragram Live.")
+        self.subtitle = QLabel("Last time I weighed myself I was 85.")
         self.subtitle.setProperty("textRole", TextRole.WELCOME_SUBTITLE.value)
         self.header_layout.addWidget(self.subtitle)
 
         self.main_layout.addLayout(self.header_layout)
-
-        self.main_layout.addStretch()
